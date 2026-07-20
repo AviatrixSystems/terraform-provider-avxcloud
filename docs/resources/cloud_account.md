@@ -26,6 +26,7 @@ description: |-
 - `display_name` (String)
 - `gcp` (Attributes) (see [below for nested schema](#nestedatt--gcp))
 - `tags` (Map of String)
+- `tier` (String)
 
 ### Read-Only
 
@@ -45,6 +46,10 @@ Optional:
 - `onboarding_mode` (String)
 - `token_info` (Attributes) (see [below for nested schema](#nestedatt--aws--token_info))
 
+Read-Only:
+
+- `delegated` (Attributes) (see [below for nested schema](#nestedatt--aws--delegated))
+
 <a id="nestedatt--aws--credentials"></a>
 ### Nested Schema for `aws.credentials`
 
@@ -60,6 +65,17 @@ Required:
 Required:
 
 - `assumed_role_arn` (String)
+
+
+<a id="nestedatt--aws--delegated"></a>
+### Nested Schema for `aws.delegated`
+
+Optional:
+
+- `approval_state` (String)
+- `console_link` (String)
+- `delegated_request_id` (String)
+- `message` (String)
 
 
 

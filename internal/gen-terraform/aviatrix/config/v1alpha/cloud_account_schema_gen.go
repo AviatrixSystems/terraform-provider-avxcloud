@@ -25,6 +25,7 @@ type CloudAccountModel struct {
 	Gcp               types.Object `tfsdk:"gcp"`
 	Azure             types.Object `tfsdk:"azure"`
 	CloudOrganization types.String `tfsdk:"cloud_organization"`
+	Tier              types.String `tfsdk:"tier"`
 }
 
 type AWSAccountDetails struct {
@@ -32,6 +33,7 @@ type AWSAccountDetails struct {
 	TokenInfo      types.Object `tfsdk:"token_info"`
 	Credentials    types.Object `tfsdk:"credentials"`
 	OnboardingMode types.String `tfsdk:"onboarding_mode"`
+	Delegated      types.Object `tfsdk:"delegated"`
 }
 
 type AWSAccountDetailsDelegatedOnboarding struct {
@@ -94,6 +96,11 @@ func AWSAccountDetailsAttributes() map[string]schema.Attribute {
 					"ONBOARDING_MODE_DELEGATED",
 				),
 			},
+		},
+		"delegated": schema.SingleNestedAttribute{
+			Description: "",
+			Computed:    true,
+			Attributes:  AWSAccountDetailsDelegatedOnboardingAttributes(),
 		},
 	}
 }
@@ -243,6 +250,16 @@ func CloudAccountSchema() schema.Schema {
 			"cloud_organization": schema.StringAttribute{
 				Description: "",
 				Computed:    true,
+			},
+			"tier": schema.StringAttribute{
+				Description: "",
+				Optional:    true,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"CLOUD_ACCOUNT_TIER_READ_ONLY",
+						"CLOUD_ACCOUNT_TIER_PROTECTION",
+					),
+				},
 			},
 		},
 	}

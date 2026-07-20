@@ -78,6 +78,10 @@ func (m *CloudAccountModel) ToProto(ctx context.Context, diags *diag.Diagnostics
 			}
 		}
 	}
+	// Enum field: Tier
+	if !m.Tier.IsNull() && !m.Tier.IsUnknown() {
+		proto.Tier = configpb.CloudAccountTier(configpb.CloudAccountTier_value[m.Tier.ValueString()])
+	}
 
 	return proto
 }
@@ -202,6 +206,12 @@ func (m *CloudAccountModel) FromProto(ctx context.Context, proto *configpb.Cloud
 	} else {
 		m.CloudOrganization = types.StringValue("")
 	}
+	// Enum field: Tier
+	if proto.GetTier() != 0 {
+		m.Tier = types.StringValue(proto.GetTier().String())
+	} else if !m.Tier.IsNull() {
+		m.Tier = types.StringNull()
+	}
 }
 
 // ToProto converts a AWSAccountDetails to a configpb.AWSAccountDetails message
@@ -239,6 +249,14 @@ func (m *AWSAccountDetails) ToProto(ctx context.Context, diags *diag.Diagnostics
 	if !m.OnboardingMode.IsNull() && !m.OnboardingMode.IsUnknown() {
 		proto.Credential = &configpb.AWSAccountDetails_OnboardingMode_{
 			OnboardingMode: configpb.AWSAccountDetails_OnboardingMode(configpb.AWSAccountDetails_OnboardingMode_value[m.OnboardingMode.ValueString()]),
+		}
+	}
+	// Object: Delegated
+	if !m.Delegated.IsNull() && !m.Delegated.IsUnknown() {
+		var intermediate AWSAccountDetailsDelegatedOnboarding
+		diags.Append(m.Delegated.As(ctx, &intermediate, basetypes.ObjectAsOptions{})...)
+		if !diags.HasError() {
+			proto.Delegated = intermediate.ToProto(ctx, diags)
 		}
 	}
 
@@ -283,6 +301,17 @@ func (m *AWSAccountDetails) FromProto(ctx context.Context, proto *configpb.AWSAc
 		m.OnboardingMode = types.StringValue(proto.GetOnboardingMode().String())
 	} else if !m.OnboardingMode.IsNull() {
 		m.OnboardingMode = types.StringNull()
+	}
+	// Object: Delegated
+	if proto.GetDelegated() != nil {
+		var intermediate AWSAccountDetailsDelegatedOnboarding
+		intermediate.FromProto(ctx, proto.GetDelegated(), diags)
+
+		objValue, objDiags := types.ObjectValueFrom(ctx, AWSAccountDetailsDelegatedOnboardingAttrTypes(), intermediate)
+		diags.Append(objDiags...)
+		m.Delegated = objValue
+	} else {
+		m.Delegated = types.ObjectNull(AWSAccountDetailsDelegatedOnboardingAttrTypes())
 	}
 }
 
@@ -591,6 +620,7 @@ func AWSAccountDetailsAttrTypes() map[string]attr.Type {
 		"token_info":      types.ObjectType{AttrTypes: AWSAccountDetailsTokenInfoAttrTypes()},
 		"credentials":     types.ObjectType{AttrTypes: AWSAccountDetailsInlineCredentialsAttrTypes()},
 		"onboarding_mode": types.StringType,
+		"delegated":       types.ObjectType{AttrTypes: AWSAccountDetailsDelegatedOnboardingAttrTypes()},
 	}
 }
 
