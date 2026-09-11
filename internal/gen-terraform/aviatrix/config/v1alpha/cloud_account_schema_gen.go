@@ -253,7 +253,7 @@ func CloudAccountSchema() schema.Schema {
 			},
 			"tier": schema.StringAttribute{
 				Description: "",
-				Optional:    true,
+				Required:    true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"CLOUD_ACCOUNT_TIER_READ_ONLY",

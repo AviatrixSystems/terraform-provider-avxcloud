@@ -16,7 +16,7 @@ description: |-
 
 ### Required
 
-- `api_access_key` (String, Sensitive) PaaS API access key.
+- `api_access_key` (String, Sensitive) Aviatrix Cloud API access key.
 
 ### Optional
 

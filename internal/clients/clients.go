@@ -30,6 +30,10 @@ type ClientGetter interface {
 	configtf.CloudAccountClientGetter
 	configtf.NetworkClientGetter
 	configtf.NetworkInspectionClientGetter
+	configtf.SmartGroupClientGetter
+	configtf.WebGroupClientGetter
+	configtf.DcfPolicyBlockClientGetter
+	configtf.DcfPolicyListClientGetter
 }
 
 var _ ClientGetter = &Clients{}
@@ -49,6 +53,22 @@ func (c *Clients) NetworkClient() configpb.NetworkServiceClient {
 
 func (c *Clients) NetworkInspectionClient() configpb.NetworkInspectionServiceClient {
 	return configpb.NewNetworkInspectionServiceClient(c.apidConn)
+}
+
+func (c *Clients) SmartGroupClient() configpb.SmartGroupServiceClient {
+	return configpb.NewSmartGroupServiceClient(c.apidConn)
+}
+
+func (c *Clients) WebGroupClient() configpb.WebGroupServiceClient {
+	return configpb.NewWebGroupServiceClient(c.apidConn)
+}
+
+func (c *Clients) DcfPolicyBlockClient() configpb.DcfPolicyBlockServiceClient {
+	return configpb.NewDcfPolicyBlockServiceClient(c.apidConn)
+}
+
+func (c *Clients) DcfPolicyListClient() configpb.DcfPolicyListServiceClient {
+	return configpb.NewDcfPolicyListServiceClient(c.apidConn)
 }
 
 type jwtCredentials struct {

@@ -46,7 +46,7 @@ func (p *AviatrixProvider) Schema(_ context.Context, _ provider.SchemaRequest, r
 				Optional:    true,
 			},
 			"api_access_key": schema.StringAttribute{
-				Description: "PaaS API access key.",
+				Description: "Aviatrix Cloud API access key.",
 				Required:    true,
 				Sensitive:   true,
 			},
@@ -98,5 +98,9 @@ func (p *AviatrixProvider) Resources(_ context.Context) []func() resource.Resour
 		configtf.NewCloudAccountResource,
 		configtf.NewNetworkResource,
 		configtf.NewNetworkInspectionResource,
+		configtf.NewSmartGroupResource,
+		configtf.NewWebGroupResource,
+		configtf.NewDcfPolicyBlockResource,
+		configtf.NewDcfPolicyListResource,
 	}
 }

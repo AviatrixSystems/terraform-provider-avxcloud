@@ -18,6 +18,7 @@ description: |-
 ### Required
 
 - `fabric` (String) Parent fabric resource name
+- `tier` (String)
 
 ### Optional
 
@@ -26,7 +27,6 @@ description: |-
 - `display_name` (String)
 - `gcp` (Attributes) (see [below for nested schema](#nestedatt--gcp))
 - `tags` (Map of String)
-- `tier` (String)
 
 ### Read-Only
 
